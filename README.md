@@ -36,7 +36,6 @@ A comprehensive web application for managing esports tournaments, teams, and mat
 1. Clone the repository:
    ```bash
    git clone <repository-url>
-   cd esports-management-system
    ```
 
 2. Install dependencies:
