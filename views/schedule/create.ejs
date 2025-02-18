@@ -1,0 +1,124 @@
+<%- include('../partials/header') %>
+
+<div class="create-match-page">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="mb-0">Schedule New Match</h3>
+        </div>
+        <div class="card-body">
+            <form action="/schedule" method="POST" class="needs-validation" novalidate>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="tournament" class="form-label">Tournament</label>
+                        <select class="form-select" id="tournament" name="tournament" required>
+                            <option value="">Select Tournament</option>
+                            <% tournaments.forEach(tournament => { %>
+                                <option value="<%= tournament._id %>"><%= tournament.name %></option>
+                            <% }); %>
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a tournament.
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="matchType" class="form-label">Match Type</label>
+                        <select class="form-select" id="matchType" name="matchType" required>
+                            <option value="">Select Match Type</option>
+                            <option value="qualifier">Qualifier</option>
+                            <option value="quarter-final">Quarter Final</option>
+                            <option value="semi-final">Semi Final</option>
+                            <option value="final">Final</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a match type.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="team1" class="form-label">Team 1</label>
+                        <select class="form-select" id="team1" name="team1" required>
+                            <option value="">Select Team 1</option>
+                            <% teams.forEach(team => { %>
+                                <option value="<%= team._id %>"><%= team.name %></option>
+                            <% }); %>
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select team 1.
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="team2" class="form-label">Team 2</label>
+                        <select class="form-select" id="team2" name="team2" required>
+                            <option value="">Select Team 2</option>
+                            <% teams.forEach(team => { %>
+                                <option value="<%= team._id %>"><%= team.name %></option>
+                            <% }); %>
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select team 2.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="scheduledTime" class="form-label">Match Time</label>
+                    <input type="datetime-local" class="form-control" id="scheduledTime" name="scheduledTime" required>
+                    <div class="invalid-feedback">
+                        Please select a match time.
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a href="/schedule" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Schedule Match</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+// Form validation
+(function () {
+    'use strict'
+    const forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+        }, false)
+    })
+})()
+
+// Prevent selecting same team
+document.getElementById('team2').addEventListener('change', function() {
+    const team1 = document.getElementById('team1').value;
+    if (this.value === team1) {
+        this.setCustomValidity('Team 2 must be different from Team 1');
+    } else {
+        this.setCustomValidity('');
+    }
+});
+
+document.getElementById('team1').addEventListener('change', function() {
+    const team2 = document.getElementById('team2');
+    if (this.value === team2.value) {
+        team2.setCustomValidity('Team 2 must be different from Team 1');
+    } else {
+        team2.setCustomValidity('');
+    }
+});
+
+// Set minimum date to today
+const scheduledTimeInput = document.getElementById('scheduledTime');
+const now = new Date();
+now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+scheduledTimeInput.min = now.toISOString().slice(0, 16);
+</script>
+
+<%- include('../partials/footer') %>

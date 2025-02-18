@@ -1,0 +1,122 @@
+<%- include('partials/header') %>
+
+<div class="dashboard">
+    <!-- Stats Overview -->
+    <div class="row mb-4">
+        <div class="col-md-4 mb-3">
+            <div class="card stats-card">
+                <div class="card-body">
+                    <h5 class="card-title">Tournaments</h5>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="mb-0">Upcoming: <%= stats.upcomingTournaments %></p>
+                            <p class="mb-0">Ongoing: <%= stats.ongoingTournaments %></p>
+                            <p class="mb-0">Completed: <%= stats.completedTournaments %></p>
+                        </div>
+                        <i class="fas fa-trophy fa-3x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card stats-card">
+                <div class="card-body">
+                    <h5 class="card-title">Matches</h5>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="mb-0">Scheduled: <%= stats.scheduledMatches %></p>
+                        </div>
+                        <i class="fas fa-gamepad fa-3x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card stats-card">
+                <div class="card-body">
+                    <h5 class="card-title">Teams</h5>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="mb-0">Total Teams: <%= stats.totalTeams %></p>
+                        </div>
+                        <i class="fas fa-users fa-3x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upcoming Matches -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Upcoming Matches</h5>
+                    <a href="/schedule" class="btn btn-sm btn-primary">View All</a>
+                </div>
+                <div class="card-body">
+                    <% if (upcomingMatches.length > 0) { %>
+                        <% upcomingMatches.forEach(match => { %>
+                            <div class="match-item">
+                                <div class="row align-items-center">
+                                    <div class="col-md-3">
+                                        <strong><%= match.tournament.name %></strong>
+                                    </div>
+                                    <div class="col-md-6 text-center">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <span><%= match.team1.name %></span>
+                                            <span class="mx-3 vs">VS</span>
+                                            <span><%= match.team2.name %></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 text-end">
+                                        <%= new Date(match.scheduledTime).toLocaleString() %>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <p class="text-center mb-0">No upcoming matches scheduled</p>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ongoing Tournaments -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Ongoing Tournaments</h5>
+                    <a href="/tournaments" class="btn btn-sm btn-primary">View All</a>
+                </div>
+                <div class="card-body">
+                    <% if (ongoingTournaments.length > 0) { %>
+                        <div class="row">
+                            <% ongoingTournaments.forEach(tournament => { %>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card tournament-card ongoing">
+                                        <div class="card-body">
+                                            <h5 class="card-title"><%= tournament.name %></h5>
+                                            <p class="card-text">
+                                                <strong>Game:</strong> <%= tournament.game %><br>
+                                                <strong>Teams:</strong> <%= tournament.teams.length %><br>
+                                                <strong>Prize Pool:</strong> ₹<%= tournament.prizePool %>
+                                            </p>
+                                            <a href="/tournaments/<%= tournament._id %>" class="btn btn-primary btn-sm">View Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        </div>
+                    <% } else { %>
+                        <p class="text-center mb-0">No ongoing tournaments</p>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,172 @@
+<%- include('../partials/header') %>
+
+<div class="schedule-page">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Match Schedule</h2>
+        <a href="/schedule/create" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Schedule Match
+        </a>
+    </div>
+
+    <% if (Object.keys(groupedMatches).length > 0) { %>
+        <% for (const [date, matches] of Object.entries(groupedMatches)) { %>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0"><%= date %></h5>
+                </div>
+                <div class="card-body">
+                    <% matches.forEach(match => { %>
+                        <div class="match-card mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-3">
+                                            <div class="tournament-info">
+                                                <h6 class="mb-1"><%= match.tournament.name %></h6>
+                                                <span class="badge bg-secondary"><%= match.matchType %></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="match-teams text-center">
+                                                <div class="row align-items-center">
+                                                    <div class="col-4 text-end">
+                                                        <h6 class="mb-0"><%= match.team1.name %></h6>
+                                                        <% if (match.status === 'completed') { %>
+                                                            <span class="score"><%= match.score.team1 %></span>
+                                                        <% } %>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <span class="vs-badge">VS</span>
+                                                    </div>
+                                                    <div class="col-4 text-start">
+                                                        <h6 class="mb-0"><%= match.team2.name %></h6>
+                                                        <% if (match.status === 'completed') { %>
+                                                            <span class="score"><%= match.score.team2 %></span>
+                                                        <% } %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="match-status text-end">
+                                                <div class="time mb-2">
+                                                    <%= new Date(match.scheduledTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %>
+                                                </div>
+                                                <% if (match.status === 'scheduled') { %>
+                                                    <button class="btn btn-sm btn-success" onclick="startMatch('<%= match._id %>')">
+                                                        Start Match
+                                                    </button>
+                                                <% } else if (match.status === 'ongoing') { %>
+                                                    <button class="btn btn-sm btn-primary" onclick="completeMatch('<%= match._id %>')">
+                                                        Complete Match
+                                                    </button>
+                                                <% } else { %>
+                                                    <div class="winner-info">
+                                                        <small class="text-success">
+                                                            Winner: <%= match.winner ? match.winner.name : 'TBD' %>
+                                                        </small>
+                                                    </div>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            </div>
+        <% } %>
+    <% } else { %>
+        <div class="alert alert-info text-center">
+            No matches scheduled. Click "Schedule Match" to create your first match!
+        </div>
+    <% } %>
+</div>
+
+<!-- Complete Match Modal -->
+<div class="modal fade" id="completeMatchModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="completeMatchForm" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title">Complete Match</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Team 1 Score</label>
+                        <input type="number" class="form-control" name="team1Score" required min="0">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Team 2 Score</label>
+                        <input type="number" class="form-control" name="team2Score" required min="0">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Winner</label>
+                        <select class="form-select" name="winner" required>
+                            <option value="" disabled selected>Select winner</option>
+                            <option value="team1">Team 1</option>
+                            <option value="team2">Team 2</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Complete Match</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function startMatch(matchId) {
+    if (confirm('Are you sure you want to start this match?')) {
+        fetch(`/schedule/${matchId}/status`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                status: 'ongoing'
+            })
+        })
+        .then(() => window.location.reload())
+        .catch(error => console.error('Error:', error));
+    }
+}
+
+function completeMatch(matchId) {
+    const modal = new bootstrap.Modal(document.getElementById('completeMatchModal'));
+    const form = document.getElementById('completeMatchForm');
+    form.action = `/schedule/${matchId}/status`;
+    
+    form.onsubmit = function(e) {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const team1Score = formData.get('team1Score');
+        const team2Score = formData.get('team2Score');
+        const winner = formData.get('winner');
+
+        fetch(form.action, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                status: 'completed',
+                team1Score,
+                team2Score,
+                winner: winner === 'team1' ? match.team1._id : match.team2._id
+            })
+        })
+        .then(() => window.location.reload())
+        .catch(error => console.error('Error:', error));
+    };
+
+    modal.show();
+}
+</script>
+
+<%- include('../partials/footer') %>

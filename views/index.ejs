@@ -1,0 +1,177 @@
+<%- include('partials/header') %>
+
+<div class="home-page">
+    <!-- Hero Section -->
+    <div class="hero-section text-center py-5 mb-5">
+        <div class="container">
+            <h1 class="display-4 mb-3">Esports Management System</h1>
+            <p class="lead mb-4">Manage tournaments, teams, and matches with ease</p>
+            <div class="stats-overview row justify-content-center">
+                <div class="col-md-3 mb-3">
+                    <div class="card stats-card">
+                        <div class="card-body">
+                            <i class="fas fa-trophy fa-2x mb-2"></i>
+                            <h3 class="mb-0"><%= stats.tournaments %></h3>
+                            <p class="mb-0">Tournaments</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card stats-card">
+                        <div class="card-body">
+                            <i class="fas fa-users fa-2x mb-2"></i>
+                            <h3 class="mb-0"><%= stats.teams %></h3>
+                            <p class="mb-0">Teams</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card stats-card">
+                        <div class="card-body">
+                            <i class="fas fa-gamepad fa-2x mb-2"></i>
+                            <h3 class="mb-0"><%= stats.matches %></h3>
+                            <p class="mb-0">Matches</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <!-- Recent Tournaments -->
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Recent Tournaments</h5>
+                        <a href="/tournaments" class="btn btn-sm btn-primary">View All</a>
+                    </div>
+                    <div class="card-body">
+                        <% if (recentTournaments.length > 0) { %>
+                            <% recentTournaments.forEach(tournament => { %>
+                                <div class="tournament-item mb-3">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <h6 class="mb-1"><%= tournament.name %></h6>
+                                            <p class="mb-1 text-muted">
+                                                <small>
+                                                    <i class="fas fa-gamepad"></i> <%= tournament.game %><br>
+                                                    <i class="fas fa-users"></i> <%= tournament.teams.length %> Teams
+                                                </small>
+                                            </p>
+                                        </div>
+                                        <span class="badge bg-<%= tournament.status === 'upcoming' ? 'warning' : tournament.status === 'ongoing' ? 'success' : 'secondary' %>">
+                                            <%= tournament.status.charAt(0).toUpperCase() + tournament.status.slice(1) %>
+                                        </span>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        <% } else { %>
+                            <p class="text-center text-muted mb-0">No tournaments yet</p>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upcoming Matches -->
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Upcoming Matches</h5>
+                        <a href="/schedule" class="btn btn-sm btn-primary">View All</a>
+                    </div>
+                    <div class="card-body">
+                        <% if (upcomingMatches.length > 0) { %>
+                            <% upcomingMatches.forEach(match => { %>
+                                <div class="match-item mb-3">
+                                    <div class="small text-muted mb-1">
+                                        <%= match.tournament.name %> - <%= match.matchType %>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="team-vs">
+                                            <span><%= match.team1.name %></span>
+                                            <span class="mx-2 vs">VS</span>
+                                            <span><%= match.team2.name %></span>
+                                        </div>
+                                        <div class="match-time">
+                                            <small>
+                                                <%= new Date(match.scheduledTime).toLocaleString() %>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        <% } else { %>
+                            <p class="text-center text-muted mb-0">No upcoming matches</p>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Teams -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Top Teams</h5>
+                        <a href="/teams" class="btn btn-sm btn-primary">View All Teams</a>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <% topTeams.forEach(team => { %>
+                                <div class="col-md-2 col-sm-4 col-6 mb-3 text-center">
+                                    <img src="<%= team.logo %>" alt="<%= team.name %>" class="team-logo-small mb-2">
+                                    <h6 class="mb-0"><%= team.name %></h6>
+                                    <small class="text-muted"><%= team.tournamentCount %> tournaments</small>
+                                </div>
+                            <% }); %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Quick Actions</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-md-3 col-sm-6 mb-3">
+                                <a href="/tournaments/create" class="btn btn-lg btn-outline-primary w-100">
+                                    <i class="fas fa-trophy mb-2"></i><br>
+                                    Create Tournament
+                                </a>
+                            </div>
+                            <div class="col-md-3 col-sm-6 mb-3">
+                                <a href="/teams/create" class="btn btn-lg btn-outline-primary w-100">
+                                    <i class="fas fa-users mb-2"></i><br>
+                                    Create Team
+                                </a>
+                            </div>
+                            <div class="col-md-3 col-sm-6 mb-3">
+                                <a href="/schedule/create" class="btn btn-lg btn-outline-primary w-100">
+                                    <i class="fas fa-calendar-plus mb-2"></i><br>
+                                    Schedule Match
+                                </a>
+                            </div>
+                            <div class="col-md-3 col-sm-6 mb-3">
+                                <a href="/dashboard" class="btn btn-lg btn-outline-primary w-100">
+                                    <i class="fas fa-chart-line mb-2"></i><br>
+                                    View Dashboard
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,132 @@
+<%- include('../partials/header') %>
+
+<div class="tournament-details-page">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><%= tournament.name %></h2>
+        <div class="d-flex gap-2">
+            <form action="/tournaments/<%= tournament._id %>/status" method="POST" class="d-inline">
+                <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
+                    <option value="upcoming" <%= tournament.status === 'upcoming' ? 'selected' : '' %>>Upcoming</option>
+                    <option value="ongoing" <%= tournament.status === 'ongoing' ? 'selected' : '' %>>Ongoing</option>
+                    <option value="completed" <%= tournament.status === 'completed' ? 'selected' : '' %>>Completed</option>
+                </select>
+            </form>
+            <a href="/tournaments" class="btn btn-secondary btn-sm">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Tournament Info -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Tournament Information</h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-2">
+                        <strong><i class="fas fa-gamepad"></i> Game:</strong>
+                        <%= tournament.game %>
+                    </p>
+                    <p class="mb-2">
+                        <strong><i class="fas fa-calendar"></i> Duration:</strong><br>
+                        <%= new Date(tournament.startDate).toLocaleDateString() %> - 
+                        <%= new Date(tournament.endDate).toLocaleDateString() %>
+                    </p>
+                    <p class="mb-2">
+                        <strong><i class="fas fa-trophy"></i> Prize Pool:</strong>
+                        ₹<%= tournament.prizePool.toLocaleString() %>
+                    </p>
+                    <p class="mb-2">
+                        <strong><i class="fas fa-info-circle"></i> Status:</strong>
+                        <span class="badge bg-<%= tournament.status === 'upcoming' ? 'warning' : tournament.status === 'ongoing' ? 'success' : 'secondary' %>">
+                            <%= tournament.status.charAt(0).toUpperCase() + tournament.status.slice(1) %>
+                        </span>
+                    </p>
+                    <div class="mt-3">
+                        <h6>Description:</h6>
+                        <p class="text-muted"><%= tournament.description %></p>
+                    </div>
+                    <div class="mt-3">
+                        <h6>Rules:</h6>
+                        <p class="text-muted"><%= tournament.rules %></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Teams -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Participating Teams</h5>
+                    <span class="badge bg-primary"><%= tournament.teams.length %> Teams</span>
+                </div>
+                <div class="card-body">
+                    <% if (tournament.teams.length > 0) { %>
+                        <div class="list-group">
+                            <% tournament.teams.forEach(team => { %>
+                                <a href="/teams/<%= team._id %>" class="list-group-item list-group-item-action">
+                                    <div class="d-flex align-items-center">
+                                        <img src="<%= team.logo %>" alt="<%= team.name %>" class="team-logo-small me-3">
+                                        <div>
+                                            <h6 class="mb-0"><%= team.name %></h6>
+                                            <small class="text-muted"><%= team.players.length %> players</small>
+                                        </div>
+                                    </div>
+                                </a>
+                            <% }); %>
+                        </div>
+                    <% } else { %>
+                        <p class="text-center text-muted mb-0">No teams registered yet</p>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <!-- Matches -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Tournament Matches</h5>
+                    <span class="badge bg-primary"><%= tournament.matches.length %> Matches</span>
+                </div>
+                <div class="card-body">
+                    <% if (tournament.matches.length > 0) { %>
+                        <div class="list-group">
+                            <% tournament.matches.forEach(match => { %>
+                                <div class="list-group-item">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <small class="text-muted">
+                                            <%= new Date(match.scheduledTime).toLocaleString() %>
+                                        </small>
+                                        <span class="badge bg-<%= match.status === 'scheduled' ? 'warning' : match.status === 'ongoing' ? 'success' : 'secondary' %>">
+                                            <%= match.status.charAt(0).toUpperCase() + match.status.slice(1) %>
+                                        </span>
+                                    </div>
+                                    <div class="match-teams text-center">
+                                        <span><%= match.team1.name %></span>
+                                        <span class="mx-2 vs">VS</span>
+                                        <span><%= match.team2.name %></span>
+                                    </div>
+                                    <% if (match.status === 'completed' && match.winner) { %>
+                                        <div class="text-center mt-2">
+                                            <small class="text-success">
+                                                Winner: <%= match.winner.name %>
+                                            </small>
+                                        </div>
+                                    <% } %>
+                                </div>
+                            <% }); %>
+                        </div>
+                    <% } else { %>
+                        <p class="text-center text-muted mb-0">No matches scheduled yet</p>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,58 @@
+<%- include('../partials/header') %>
+
+<div class="tournaments-page">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Tournaments</h2>
+        <a href="/tournaments/create" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Create Tournament
+        </a>
+    </div>
+
+    <div class="row">
+        <% tournaments.forEach(tournament => { %>
+            <div class="col-md-4 mb-4">
+                <div class="card tournament-card <%= tournament.status %>">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="card-title mb-0"><%= tournament.name %></h5>
+                            <span class="badge bg-<%= tournament.status === 'upcoming' ? 'warning' : tournament.status === 'ongoing' ? 'success' : 'secondary' %>">
+                                <%= tournament.status.charAt(0).toUpperCase() + tournament.status.slice(1) %>
+                            </span>
+                        </div>
+                        <div class="tournament-info">
+                            <p class="mb-2">
+                                <i class="fas fa-gamepad"></i> <%= tournament.game %>
+                            </p>
+                            <p class="mb-2">
+                                <i class="fas fa-calendar"></i> 
+                                <%= new Date(tournament.startDate).toLocaleDateString() %> - 
+                                <%= new Date(tournament.endDate).toLocaleDateString() %>
+                            </p>
+                            <p class="mb-2">
+                                <i class="fas fa-users"></i> <%= tournament.teams.length %> Teams
+                            </p>
+                            <p class="mb-3">
+                                <i class="fas fa-trophy"></i> Prize Pool: ₹<%= tournament.prizePool.toLocaleString() %>
+                            </p>
+                        </div>
+                        <div class="d-grid">
+                            <a href="/tournaments/<%= tournament._id %>" class="btn btn-primary">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+
+        <% if (tournaments.length === 0) { %>
+            <div class="col-12">
+                <div class="alert alert-info text-center">
+                    No tournaments found. Create your first tournament to get started!
+                </div>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

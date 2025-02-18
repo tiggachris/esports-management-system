@@ -1,0 +1,178 @@
+<%- include('../partials/header') %>
+
+<div class="team-details-page">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><%= team.name %></h2>
+        <a href="/teams" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Teams
+        </a>
+    </div>
+
+    <div class="row">
+        <!-- Team Info -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <img src="<%= team.logo %>" alt="<%= team.name %>" class="team-logo mb-3">
+                    <h4 class="card-title"><%= team.name %></h4>
+                    <div class="team-stats mt-3">
+                        <div class="row">
+                            <div class="col">
+                                <div class="stat-item">
+                                    <div class="stat-value"><%= team.players.length %></div>
+                                    <div class="stat-label">Players</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="stat-item">
+                                    <div class="stat-value"><%= team.tournaments.length %></div>
+                                    <div class="stat-label">Tournaments</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="stat-item">
+                                    <div class="stat-value"><%= team.matches ? team.matches.length : 0 %></div>
+                                    <div class="stat-label">Matches</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Players -->
+        <div class="col-md-8 mb-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Team Players</h5>
+                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addPlayerModal">
+                        <i class="fas fa-plus"></i> Add Player
+                    </button>
+                </div>
+                <div class="card-body">
+                    <% if (team.players.length > 0) { %>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Game ID</th>
+                                        <th>Role</th>
+                                        <th>Join Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% team.players.forEach(player => { %>
+                                        <tr>
+                                            <td><%= player.name %></td>
+                                            <td><%= player.gameId %></td>
+                                            <td><%= player.role || 'N/A' %></td>
+                                            <td><%= new Date(player.joinDate).toLocaleDateString() %></td>
+                                            <td>
+                                                <button class="btn btn-danger btn-sm" onclick="removePlayer('<%= player._id %>')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    <% }); %>
+                                </tbody>
+                            </table>
+                        </div>
+                    <% } else { %>
+                        <p class="text-center text-muted mb-0">No players in the team yet</p>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tournaments -->
+        <div class="col-12 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Tournament History</h5>
+                </div>
+                <div class="card-body">
+                    <% if (team.tournaments.length > 0) { %>
+                        <div class="row">
+                            <% team.tournaments.forEach(tournament => { %>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card tournament-card h-100">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><%= tournament.name %></h6>
+                                            <p class="card-text">
+                                                <small class="text-muted">
+                                                    <i class="fas fa-gamepad"></i> <%= tournament.game %><br>
+                                                    <i class="fas fa-calendar"></i> 
+                                                    <%= new Date(tournament.startDate).toLocaleDateString() %> - 
+                                                    <%= new Date(tournament.endDate).toLocaleDateString() %>
+                                                </small>
+                                            </p>
+                                            <a href="/tournaments/<%= tournament._id %>" class="btn btn-primary btn-sm">
+                                                View Tournament
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        </div>
+                    <% } else { %>
+                        <p class="text-center text-muted mb-0">No tournament history</p>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Player Modal -->
+<div class="modal fade" id="addPlayerModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/teams/<%= team._id %>/players" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Player</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="playerName" class="form-label">Player Name</label>
+                        <input type="text" class="form-control" id="playerName" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="gameId" class="form-label">Game ID</label>
+                        <input type="text" class="form-control" id="gameId" name="gameId" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="role" class="form-label">Role</label>
+                        <input type="text" class="form-control" id="role" name="role">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Player</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function removePlayer(playerId) {
+    if (confirm('Are you sure you want to remove this player from the team?')) {
+        fetch(`/teams/<%= team._id %>/players/${playerId}`, {
+            method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.reload();
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+}
+</script>
+
+<%- include('../partials/footer') %>
