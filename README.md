@@ -115,4 +115,4 @@ This project is licensed under the ISC License.
 
 ## Support
 
-For support, email [your-email@example.com](mailto:tiggachris95@gmail.com) or create an issue in the repository.
+For support, email [tiggachris95@gmail.com](mailto:tiggachris95@gmail.com) or create an issue in the repository.
