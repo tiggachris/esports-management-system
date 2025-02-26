@@ -1,6 +1,5 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-const { testTeam, testTournament } = require('./test-data');
 const Team = require('./models/Team');
 const Tournament = require('./models/Tournament');
 

@@ -68,6 +68,39 @@ main {
     border: 3px solid #00ff88;
 }
 
+.team-logo-small {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #00ff88;
+    margin: 0 auto;
+    display: block;
+}
+
+.team-card {
+    text-align: center;
+}
+
+.team-card .logo-container {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 15px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.team-card .logo-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
 /* Match Schedule */
 .match-item {
     background: white;

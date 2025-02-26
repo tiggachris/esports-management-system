@@ -121,10 +121,16 @@
                     <div class="card-body">
                         <div class="row">
                             <% topTeams.forEach(team => { %>
-                                <div class="col-md-2 col-sm-4 col-6 mb-3 text-center">
-                                    <img src="<%= team.logo %>" alt="<%= team.name %>" class="team-logo-small mb-2">
-                                    <h6 class="mb-0"><%= team.name %></h6>
-                                    <small class="text-muted"><%= team.tournamentCount %> tournaments</small>
+                                <div class="col-md-2 col-sm-4 col-6 mb-3">
+                                    <div class="card team-card h-100">
+                                        <div class="card-body">
+                                            <div class="logo-container">
+                                                <img src="<%= team.logo %>" alt="<%= team.name %>" class="img-fluid">
+                                            </div>
+                                            <h6 class="mb-1"><%= team.name %></h6>
+                                            <small class="text-muted"><%= team.tournamentCount %> tournaments</small>
+                                        </div>
+                                    </div>
                                 </div>
                             <% }); %>
                         </div>
