@@ -1,9 +1,21 @@
-/* General Styles */
+/* Global Styles */
+:root {
+    --primary-red: #ff0033;
+    --primary-black: #0a0a0a;
+    --secondary-black: #1a1a1a;
+    --text-white: #ffffff;
+    --text-gray: rgba(255, 255, 255, 0.8);
+}
+
 body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #f8f9fa;
+    background-color: var(--primary-black);
+    color: var(--text-white);
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
 }
 
 main {
@@ -12,12 +24,39 @@ main {
 
 /* Navbar Styles */
 .navbar {
+    background-color: var(--primary-black);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 0;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--text-white);
+}
+
+.navbar-brand:hover {
+    color: var(--primary-red);
 }
 
 .navbar-brand i {
     margin-right: 8px;
-    color: #00ff88;
+    color: var(--primary-red);
+}
+
+.nav-link {
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--text-white) !important;
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.nav-link:hover {
+    color: var(--primary-red) !important;
 }
 
 .nav-link i {
@@ -30,6 +69,10 @@ main {
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     transition: transform 0.2s;
+    background-color: var(--secondary-black);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0;
 }
 
 .card:hover {
@@ -38,13 +81,13 @@ main {
 
 /* Dashboard Stats */
 .stats-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-black) 100%);
+    color: var(--text-white);
 }
 
 /* Tournament Cards */
 .tournament-card {
-    border-left: 4px solid #00ff88;
+    border-left: 4px solid var(--primary-red);
 }
 
 .tournament-card.upcoming {
@@ -52,7 +95,7 @@ main {
 }
 
 .tournament-card.ongoing {
-    border-left-color: #00ff88;
+    border-left-color: var(--primary-red);
 }
 
 .tournament-card.completed {
@@ -65,7 +108,7 @@ main {
     height: 100px;
     object-fit: cover;
     border-radius: 50%;
-    border: 3px solid #00ff88;
+    border: 3px solid var(--primary-red);
 }
 
 .team-logo-small {
@@ -73,7 +116,7 @@ main {
     height: 80px;
     object-fit: cover;
     border-radius: 50%;
-    border: 2px solid #00ff88;
+    border: 2px solid var(--primary-red);
     margin: 0 auto;
     display: block;
 }
@@ -87,7 +130,7 @@ main {
     height: 100px;
     margin: 0 auto 15px;
     padding: 10px;
-    background-color: white;
+    background-color: var(--secondary-black);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -103,77 +146,208 @@ main {
 
 /* Match Schedule */
 .match-item {
-    background: white;
+    background: var(--secondary-black);
     border-radius: 8px;
     padding: 15px;
     margin-bottom: 15px;
-    border-left: 4px solid #00ff88;
+    border-left: 4px solid var(--primary-red);
 }
 
 .match-item .vs {
     font-size: 1.2em;
     font-weight: bold;
-    color: #764ba2;
+    color: var(--primary-red);
 }
 
 /* Buttons */
 .btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-color: var(--primary-red);
     border: none;
+    border-radius: 0;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .btn-primary:hover {
-    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    background-color: #cc0029;
 }
 
 /* Forms */
 .form-control:focus {
-    border-color: #00ff88;
-    box-shadow: 0 0 0 0.2rem rgba(0, 255, 136, 0.25);
+    border-color: var(--primary-red);
+    box-shadow: 0 0 0 0.2rem rgba(255, 0, 51, 0.25);
 }
 
 /* Auth Pages Styles */
-.card {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: none;
-    border-radius: 10px;
+.card-header {
+    background-color: var(--secondary-black);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
 }
 
-.card-header {
-    background-color: #f8f9fa;
-    border-bottom: none;
-    padding: 1.5rem;
+.card-header h3 {
+    color: var(--text-white);
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
 .card-body {
     padding: 2rem;
+    background-color: var(--secondary-black);
+}
+
+.form-label {
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 500;
+    color: var(--text-white) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
 }
 
 .form-control {
-    border-radius: 5px;
-    padding: 0.75rem;
+    font-family: 'Exo 2', sans-serif;
+    background-color: var(--primary-black);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-white) !important;
+    font-weight: 400;
 }
 
 .form-control:focus {
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-}
-
-.btn-primary {
-    padding: 0.75rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    background-color: var(--primary-black);
+    border-color: var(--primary-red);
+    color: var(--text-white);
+    box-shadow: 0 0 0 0.2rem rgba(255, 0, 51, 0.25);
 }
 
 .alert {
-    border-radius: 5px;
-    margin-bottom: 1.5rem;
+    border-radius: 0;
+    background-color: var(--primary-red);
+    border: none;
+    color: var(--text-white);
+}
+
+/* Links */
+a {
+    color: var(--primary-red) !important;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: #cc0029 !important;
+    text-decoration: none;
+}
+
+/* Tables */
+.table {
+    color: var(--text-white) !important;
+}
+
+.table th {
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background-color: var(--primary-black);
+    color: var(--text-white) !important;
+}
+
+.table td {
+    font-family: 'Exo 2', sans-serif;
+    color: var(--text-white) !important;
 }
 
 /* Footer */
 .footer {
+    background-color: var(--primary-black);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-white);
+    padding: 2rem 0;
     margin-top: auto;
-    background-color: #343a40 !important;
+}
+
+/* Tournament List Styles */
+.tournament-list h2,
+.tournament-list h3,
+.tournament-list p,
+.tournament-list a,
+.tournament-list span {
+    color: var(--text-white);
+}
+
+.recent-tournaments {
+    color: var(--text-white);
+}
+
+.tournament-section {
+    background-color: var(--secondary-black);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.tournament-section h2,
+.tournament-section h3 {
+    color: var(--text-white);
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+}
+
+.tournament-item {
+    padding: 1rem;
+    border-left: 4px solid var(--primary-red);
+    background-color: var(--primary-black);
+    margin-bottom: 1rem;
+}
+
+.tournament-item:hover {
+    background-color: rgba(255, 0, 51, 0.1);
+}
+
+.tournament-item * {
+    color: var(--text-white);
+}
+
+/* Game specific styles */
+.game-section {
+    margin-bottom: 2rem;
+}
+
+.game-section h3 {
+    color: var(--text-white);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.game-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    background-color: var(--primary-black);
+    border-left: 3px solid var(--primary-red);
+    margin-bottom: 0.5rem;
+}
+
+.game-item:hover {
+    background-color: rgba(255, 0, 51, 0.1);
+}
+
+.game-item img {
+    width: 30px;
+    height: 30px;
+    margin-right: 1rem;
+}
+
+.game-item span {
+    color: var(--text-white);
+    font-weight: 500;
 }
 
 /* Responsive Design */
@@ -186,4 +360,363 @@ main {
         width: 80px;
         height: 80px;
     }
+}
+
+/* Global Text Colors */
+h1, h2, h3, h4, h5, h6,
+p, span, a, label, td, th,
+.text-muted, .form-text {
+    color: var(--text-white) !important;
+}
+
+/* Modal Styles */
+.modal-content {
+    background-color: var(--secondary-black);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: var(--primary-black);
+}
+
+.modal-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: var(--primary-black);
+}
+
+.modal-title {
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 700;
+    color: var(--text-white) !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* Dashboard Styles */
+.dashboard-card {
+    background-color: var(--secondary-black);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.dashboard-stat {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-red);
+}
+
+.stat-label {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+    margin-top: 0.5rem;
+}
+
+/* Team Styles */
+.team-card {
+    background-color: var(--secondary-black);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.team-name {
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 1rem 0;
+}
+
+/* Player Styles */
+.player-card {
+    background-color: var(--secondary-black);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.player-name {
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Schedule Styles */
+.schedule-card {
+    background-color: var(--secondary-black);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.match-time {
+    color: var(--primary-red);
+    font-weight: 600;
+}
+
+/* Settings Page */
+.settings-section {
+    background-color: var(--secondary-black);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.settings-title {
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+}
+
+/* Pagination */
+.pagination .page-link {
+    background-color: var(--secondary-black);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-white);
+}
+
+.pagination .page-link:hover {
+    background-color: var(--primary-red);
+    border-color: var(--primary-red);
+    color: var(--text-white);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--primary-red);
+    border-color: var(--primary-red);
+}
+
+/* Dropdown Menus */
+.dropdown-menu {
+    background-color: var(--secondary-black);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-item {
+    font-family: 'Exo 2', sans-serif;
+    color: var(--text-white) !important;
+}
+
+.dropdown-item:hover {
+    background-color: var(--primary-red);
+    color: var(--text-white) !important;
+}
+
+/* Badges */
+.badge {
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+.badge-primary {
+    background-color: var(--primary-red);
+}
+
+/* Alerts */
+.alert {
+    background-color: var(--secondary-black);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-white);
+}
+
+.alert-danger {
+    background-color: var(--primary-red);
+    border-color: var(--primary-red);
+}
+
+/* List Groups */
+.list-group-item {
+    font-family: 'Exo 2', sans-serif;
+    background-color: var(--secondary-black);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-white) !important;
+}
+
+.list-group-item:hover {
+    background-color: var(--primary-black);
+}
+
+/* Tooltips */
+.tooltip-inner {
+    background-color: var(--primary-red);
+}
+
+.bs-tooltip-top .tooltip-arrow::before {
+    border-top-color: var(--primary-red);
+}
+
+/* Progress Bars */
+.progress {
+    background-color: var(--primary-black);
+}
+
+.progress-bar {
+    background-color: var(--primary-red);
+}
+
+/* Tables */
+.table-hover tbody tr:hover {
+    background-color: rgba(255, 0, 51, 0.1);
+}
+
+/* Form Select */
+select.form-select {
+    font-family: 'Exo 2', sans-serif;
+    background-color: var(--primary-black);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: var(--text-white) !important;
+}
+
+select.form-select option {
+    font-family: 'Exo 2', sans-serif;
+    background-color: var(--primary-black);
+    color: var(--text-white) !important;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 700;
+    color: var(--text-white) !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+p, span, a, label, td, th {
+    font-family: 'Exo 2', sans-serif;
+    color: var(--text-white) !important;
+}
+
+.text-muted {
+    color: var(--text-gray) !important;
+}
+
+/* Additional Enhancements for Text Visibility */
+::placeholder {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.small {
+    color: var(--text-gray) !important;
+}
+
+.text-danger {
+    color: var(--primary-red) !important;
+}
+
+/* Ensure ALL text elements are white */
+*, 
+*::before, 
+*::after {
+    color: var(--text-white);
+}
+
+/* Game section specific styles */
+.game-section,
+.game-section *,
+.game-title,
+.game-description,
+.game-info {
+    color: var(--text-white) !important;
+}
+
+/* Tournament section specific styles */
+.tournament-section,
+.tournament-section *,
+.tournament-title,
+.tournament-info,
+.tournament-details {
+    color: var(--text-white) !important;
+}
+
+/* Specific text elements that might be missing */
+.section-title,
+.category-title,
+.game-name,
+.team-name,
+.player-name,
+.match-details,
+.schedule-item,
+.news-title,
+.news-content,
+.sidebar-title,
+.sidebar-content,
+.footer-text {
+    color: var(--text-white) !important;
+}
+
+/* Ensure links in dark sections are visible */
+.dark-section a,
+.game-section a,
+.tournament-section a {
+    color: var(--text-white) !important;
+}
+
+.dark-section a:hover,
+.game-section a:hover,
+.tournament-section a:hover {
+    color: var(--primary-red) !important;
+}
+
+/* Override any Bootstrap text colors */
+.text-dark,
+.text-body,
+.text-black,
+.text-secondary {
+    color: var(--text-white) !important;
+}
+
+/* Ensure form labels and text are visible */
+label,
+.form-label,
+.form-text,
+.input-group-text {
+    color: var(--text-white) !important;
+}
+
+/* Additional specific elements */
+.recent-tournaments,
+.tournament-list,
+.game-list,
+.team-list,
+.player-list,
+.match-list,
+.news-list,
+.sidebar-list {
+    color: var(--text-white) !important;
+}
+
+/* Ensure headings in all contexts are white */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    color: var(--text-white) !important;
+}
+
+/* Override any inherited colors */
+[class*="text-"] {
+    color: var(--text-white) !important;
+}
+
+/* Exception for specific elements that need different colors */
+.text-danger,
+.text-warning,
+.text-success {
+    color: inherit !important;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-success,
+.btn-danger,
+.btn-warning {
+    color: var(--text-white) !important;
 }
