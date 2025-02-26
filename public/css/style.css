@@ -132,6 +132,44 @@ main {
     box-shadow: 0 0 0 0.2rem rgba(0, 255, 136, 0.25);
 }
 
+/* Auth Pages Styles */
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 10px;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: none;
+    padding: 1.5rem;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.form-control {
+    border-radius: 5px;
+    padding: 0.75rem;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.btn-primary {
+    padding: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.alert {
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+}
+
 /* Footer */
 .footer {
     margin-top: auto;

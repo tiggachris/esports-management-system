@@ -47,8 +47,12 @@ app.use(session({
 }));
 
 // Routes
-app.use('/', require('./routes/index'));
-app.use('/dashboard', require('./routes/dashboard'));
+const { router: authRouter, isAuthenticated } = require('./routes/auth');
+app.use('/', authRouter);
+
+// Protected routes - require authentication
+app.use('/', isAuthenticated, require('./routes/index'));
+app.use('/dashboard', isAuthenticated, require('./routes/dashboard'));
 app.use('/tournaments', require('./routes/tournaments'));
 app.use('/teams', require('./routes/teams'));
 app.use('/schedule', require('./routes/schedule'));
