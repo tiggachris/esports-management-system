@@ -6,36 +6,47 @@ const Team = require('../models/Team');
 
 router.get('/', async (req, res) => {
     try {
-        // Get counts and stats
-        const stats = await Promise.all([
-            Tournament.countDocuments({ status: 'upcoming' }),
-            Tournament.countDocuments({ status: 'ongoing' }),
-            Tournament.countDocuments({ status: 'completed' }),
-            Match.countDocuments({ status: 'scheduled' }),
-            Team.countDocuments()
-        ]);
+        // Get recent tournaments
+        const recentTournaments = await Tournament.find()
+            .sort({ startDate: -1 })
+            .limit(3)
+            .populate('teams');
 
         // Get upcoming matches
         const upcomingMatches = await Match.find({ status: 'scheduled' })
-            .populate('team1 team2 tournament')
             .sort({ scheduledTime: 1 })
-            .limit(5);
+            .limit(5)
+            .populate('tournament team1 team2');
 
-        // Get ongoing tournaments
-        const ongoingTournaments = await Tournament.find({ status: 'ongoing' })
-            .populate('teams')
-            .limit(3);
+        // Get top teams (based on number of tournaments)
+        const topTeams = await Team.aggregate([
+            {
+                $project: {
+                    name: 1,
+                    logo: 1,
+                    tournamentCount: { $size: "$tournaments" }
+                }
+            },
+            { $sort: { tournamentCount: -1 } },
+            { $limit: 6 }
+        ]);
+
+        // Get system stats
+        const stats = await Promise.all([
+            Tournament.countDocuments(),
+            Team.countDocuments(),
+            Match.countDocuments()
+        ]);
 
         res.render('dashboard', {
-            stats: {
-                upcomingTournaments: stats[0],
-                ongoingTournaments: stats[1],
-                completedTournaments: stats[2],
-                scheduledMatches: stats[3],
-                totalTeams: stats[4]
-            },
+            recentTournaments,
             upcomingMatches,
-            ongoingTournaments
+            topTeams,
+            stats: {
+                tournaments: stats[0],
+                teams: stats[1],
+                matches: stats[2]
+            }
         });
     } catch (error) {
         console.error('Dashboard Error:', error);

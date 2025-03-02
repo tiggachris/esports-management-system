@@ -22,7 +22,7 @@
                                     <div class="row align-items-center">
                                         <div class="col-md-3">
                                             <div class="tournament-info">
-                                                <h6 class="mb-1"><%= match.tournament.name %></h6>
+                                                <h6 class="mb-1"><%= match.tournament ? match.tournament.name : 'Unassigned Tournament' %></h6>
                                                 <span class="badge bg-secondary"><%= match.matchType %></span>
                                             </div>
                                         </div>
@@ -30,8 +30,8 @@
                                             <div class="match-teams text-center">
                                                 <div class="row align-items-center">
                                                     <div class="col-4 text-end">
-                                                        <h6 class="mb-0"><%= match.team1.name %></h6>
-                                                        <% if (match.status === 'completed') { %>
+                                                        <h6 class="mb-0"><%= match.team1 ? match.team1.name : 'TBD' %></h6>
+                                                        <% if (match.status === 'completed' && match.score) { %>
                                                             <span class="score"><%= match.score.team1 %></span>
                                                         <% } %>
                                                     </div>
@@ -39,8 +39,8 @@
                                                         <span class="vs-badge">VS</span>
                                                     </div>
                                                     <div class="col-4 text-start">
-                                                        <h6 class="mb-0"><%= match.team2.name %></h6>
-                                                        <% if (match.status === 'completed') { %>
+                                                        <h6 class="mb-0"><%= match.team2 ? match.team2.name : 'TBD' %></h6>
+                                                        <% if (match.status === 'completed' && match.score) { %>
                                                             <span class="score"><%= match.score.team2 %></span>
                                                         <% } %>
                                                     </div>
@@ -63,7 +63,7 @@
                                                 <% } else { %>
                                                     <div class="winner-info">
                                                         <small class="text-success">
-                                                            Winner: <%= match.winner ? match.winner.name : 'TBD' %>
+                                                            Winner: <%= match.winner && match.winner.name ? match.winner.name : 'TBD' %>
                                                         </small>
                                                     </div>
                                                 <% } %>
@@ -147,7 +147,7 @@ function completeMatch(matchId) {
         const formData = new FormData(form);
         const team1Score = formData.get('team1Score');
         const team2Score = formData.get('team2Score');
-        const winner = formData.get('winner');
+        const winnerTeam = formData.get('winner');
 
         fetch(form.action, {
             method: 'POST',
@@ -158,7 +158,7 @@ function completeMatch(matchId) {
                 status: 'completed',
                 team1Score,
                 team2Score,
-                winner: winner === 'team1' ? match.team1._id : match.team2._id
+                winner: null // Let the server handle winner assignment
             })
         })
         .then(() => window.location.reload())

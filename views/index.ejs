@@ -80,7 +80,7 @@
                             <% upcomingMatches.forEach(match => { %>
                                 <div class="match-item mb-3">
                                     <div class="small text-muted mb-1">
-                                        <%= match.tournament.name %> - <%= match.matchType %>
+                                        <%= match.tournament ? `${match.tournament.name} - ${match.matchType}` : match.matchType %>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="team-vs">
