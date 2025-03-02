@@ -4,37 +4,35 @@
     <!-- Hero Section -->
     <div class="hero-section text-center py-5 mb-5">
         <div class="container">
-            <div class="brand-logo mb-4">
-                <img src="/images/logo.png" alt="Apex Grid Logo" class="img-fluid" style="max-width: 200px;">
-            </div>
             <h1 class="display-4 mb-3">APEX GRID</h1>
             <p class="lead mb-4">PEAK PERFORMANCE, STRUCTURED DOMINANCE</p>
         </div>
     </div>
 
     <!-- Image Carousel Section -->
+    <link rel="stylesheet" href="/css/carousel.css">
     <div class="container mb-5">
         <div class="carousel-container">
             <div class="carousel-wrapper">
+                <div class="carousel-slide video-slide">
+                    <video src="/images/carousel-images/carousel-4.mp4" class="carousel-video" muted loop autoplay playsinline></video>
+                </div>
                 <div class="carousel-slide">
-                    <video class="carousel-video" muted playsinline loop>
-                        <source src="/images/carousel-images/carousel-1.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+                    <img src="/images/carousel-images/carousel-1.jpg" alt="Esports Event 1" class="carousel-image">
                 </div>
                 <div class="carousel-slide">
                     <img src="/images/carousel-images/carousel-2.jpg" alt="Esports Event 2" class="carousel-image">
                 </div>
+                <div class="carousel-slide">
+                    <img src="/images/carousel-images/carousel-3.jpg.png" alt="Esports Event 3" class="carousel-image">
+                </div>
             </div>
-            <button class="carousel-button prev">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="carousel-button next">
-                <i class="fas fa-chevron-right"></i>
-            </button>
+            <button class="carousel-button prev">&lt;</button>
+            <button class="carousel-button next">&gt;</button>
             <div class="carousel-indicators"></div>
         </div>
     </div>
+    <script src="/js/carousel.js"></script>
 
     <!-- Gaming News Section -->
     <div class="container mb-5">
@@ -83,11 +81,43 @@
     <div class="container mb-5">
         <div class="text-center">
             <h2 class="section-title mb-4">FOLLOW US</h2>
-            <div class="social-links">
-                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-twitch"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+            <div class="social-links-container">
+                <div class="social-link-card">
+                    <a href="#" class="social-link twitter">
+                        <i class="fab fa-twitter"></i>
+                        <div class="social-stats">
+                            <span class="follower-count">125.6K</span>
+                            <span class="follower-label">Followers</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="social-link-card">
+                    <a href="#" class="social-link discord">
+                        <i class="fab fa-discord"></i>
+                        <div class="social-stats">
+                            <span class="follower-count">85.2K</span>
+                            <span class="follower-label">Members</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="social-link-card">
+                    <a href="#" class="social-link twitch">
+                        <i class="fab fa-twitch"></i>
+                        <div class="social-stats">
+                            <span class="follower-count">250K</span>
+                            <span class="follower-label">Followers</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="social-link-card">
+                    <a href="#" class="social-link youtube">
+                        <i class="fab fa-youtube"></i>
+                        <div class="social-stats">
+                            <span class="follower-count">450K</span>
+                            <span class="follower-label">Subscribers</span>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
