@@ -1,0 +1,52 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="mb-0"><%= match.tournament.name %></h3>
+            <p class="mb-0 text-muted"><%= match.matchType.charAt(0).toUpperCase() + match.matchType.slice(1) %></p>
+        </div>
+        
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <h4><%= match.team1.name %></h4>
+                    <h1 class="display-4"><%= match.score.team1 %></h1>
+                </div>
+                
+                <div class="col-md-4 text-center d-flex align-items-center justify-content-center">
+                    <h2>VS</h2>
+                </div>
+                
+                <div class="col-md-4 text-center">
+                    <h4><%= match.team2.name %></h4>
+                    <h1 class="display-4"><%= match.score.team2 %></h1>
+                </div>
+            </div>
+            
+            <hr>
+            
+            <div class="match-details mt-4">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Status:</strong> 
+                            <span class="badge <%= match.status === 'completed' ? 'bg-success' : (match.status === 'ongoing' ? 'bg-warning' : 'bg-primary') %>">
+                                <%= match.status.charAt(0).toUpperCase() + match.status.slice(1) %>
+                            </span>
+                        </p>
+                        <p><strong>Scheduled Time:</strong> <%= new Date(match.scheduledTime).toLocaleString() %></p>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <% if (match.status === 'completed' && match.winner) { %>
+                            <p><strong>Winner:</strong> <%= match.winner.name %></p>
+                        <% } %>
+                        <p><strong>Created:</strong> <%= new Date(match.createdAt).toLocaleString() %></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

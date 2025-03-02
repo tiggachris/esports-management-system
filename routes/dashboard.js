@@ -12,22 +12,34 @@ router.get('/', async (req, res) => {
             .limit(3)
             .populate('teams');
 
-        // Get upcoming matches
+        // Get upcoming matches (only scheduled matches)
         const upcomingMatches = await Match.find({ status: 'scheduled' })
             .sort({ scheduledTime: 1 })
             .limit(5)
             .populate('tournament team1 team2');
 
-        // Get top teams (based on number of tournaments)
-        const topTeams = await Team.aggregate([
-            {
-                $project: {
-                    name: 1,
-                    logo: 1,
-                    tournamentCount: { $size: "$tournaments" }
-                }
-            },
-            { $sort: { tournamentCount: -1 } },
+        // Get top teams (based on wins)
+        const topTeams = await Match.aggregate([
+            { $match: { status: 'completed' } },
+            { $group: {
+                _id: '$winner',
+                wins: { $sum: 1 }
+            }},
+            { $lookup: {
+                from: 'teams',
+                localField: '_id',
+                foreignField: '_id',
+                as: 'team'
+            }},
+            { $unwind: '$team' },
+            { $project: {
+                _id: 1,
+                name: '$team.name',
+                logo: '$team.logo',
+                wins: 1,
+                tournamentCount: { $size: '$team.tournaments' }
+            }},
+            { $sort: { wins: -1 } },
             { $limit: 6 }
         ]);
 

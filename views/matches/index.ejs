@@ -1,0 +1,51 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+    <h2>Match History</h2>
+    
+    <div class="row">
+        <% matches.forEach(match => { %>
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><%= match.tournament.name %> - <%= match.matchType.charAt(0).toUpperCase() + match.matchType.slice(1) %></h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="team-info">
+                                <h6><%= match.team1.name %></h6>
+                                <span class="score"><%= match.score.team1 %></span>
+                            </div>
+                            <div class="vs">VS</div>
+                            <div class="team-info text-end">
+                                <h6><%= match.team2.name %></h6>
+                                <span class="score"><%= match.score.team2 %></span>
+                            </div>
+                        </div>
+                        
+                        <div class="match-details">
+                            <p class="mb-2">
+                                <strong>Status:</strong> 
+                                <span class="badge <%= match.status === 'completed' ? 'bg-success' : (match.status === 'ongoing' ? 'bg-warning' : 'bg-primary') %>">
+                                    <%= match.status.charAt(0).toUpperCase() + match.status.slice(1) %>
+                                </span>
+                            </p>
+                            <p class="mb-2">
+                                <strong>Scheduled Time:</strong> 
+                                <%= new Date(match.scheduledTime).toLocaleString() %>
+                            </p>
+                            <% if (match.status === 'completed' && match.winner) { %>
+                                <p class="mb-0">
+                                    <strong>Winner:</strong> 
+                                    <%= match.winner.name %>
+                                </p>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

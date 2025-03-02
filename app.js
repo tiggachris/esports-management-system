@@ -55,6 +55,7 @@ app.use('/', isAuthenticated, require('./routes/index'));
 app.use('/dashboard', isAuthenticated, require('./routes/dashboard'));
 app.use('/tournaments', require('./routes/tournaments'));
 app.use('/teams', require('./routes/teams'));
+app.use('/matches', require('./routes/matches')); 
 app.use('/schedule', require('./routes/schedule'));
 app.use('/settings', require('./routes/settings'));
 

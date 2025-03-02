@@ -382,6 +382,33 @@ a:hover {
     font-weight: 500;
 }
 
+/* Match History Styles */
+.team-info {
+    flex: 1;
+}
+
+.vs {
+    margin: 0 20px;
+    font-weight: bold;
+    color: #666;
+}
+
+.score {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+}
+
+.match-details {
+    border-top: 1px solid #eee;
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+
+.badge {
+    padding: 0.5em 1em;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .card {

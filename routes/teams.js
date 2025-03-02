@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Team = require('../models/Team');
+const Match = require('../models/Match');
 const multer = require('multer');
 const path = require('path');
 
@@ -36,8 +37,39 @@ router.get('/', async (req, res) => {
         const teams = await Team.find()
             .populate('tournaments')
             .sort('name');
+
+        // Get wins for each team
+        const teamWins = await Match.aggregate([
+            { 
+                $match: { 
+                    status: 'completed',
+                    winner: { $ne: null }
+                } 
+            },
+            { 
+                $group: {
+                    _id: '$winner',
+                    wins: { $sum: 1 }
+                }
+            }
+        ]);
+
+        // Create a map of team wins
+        const winsMap = {};
+        teamWins.forEach(item => {
+            if (item._id) {
+                winsMap[item._id.toString()] = item.wins;
+            }
+        });
+
+        // Add wins to team objects
+        teams.forEach(team => {
+            team.wins = winsMap[team._id.toString()] || 0;
+        });
+
         res.render('teams/index', { teams });
     } catch (error) {
+        console.error('Team List Error:', error);
         res.status(500).render('error', { error });
     }
 });
@@ -82,6 +114,14 @@ router.get('/:id', async (req, res) => {
         if (!team) {
             return res.status(404).render('error', { error: 'Team not found' });
         }
+
+        // Get team's wins
+        const wins = await Match.countDocuments({
+            status: 'completed',
+            winner: team._id
+        });
+
+        team.wins = wins || 0;
 
         res.render('teams/details', { team });
     } catch (error) {

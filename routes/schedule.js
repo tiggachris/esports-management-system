@@ -7,8 +7,8 @@ const Team = require('../models/Team');
 // Match schedule list
 router.get('/', async (req, res) => {
     try {
-        const matches = await Match.find()
-            .populate('tournament team1 team2 winner')
+        const matches = await Match.find({ status: { $in: ['scheduled', 'ongoing'] } })
+            .populate('tournament team1 team2')
             .sort({ scheduledTime: 1 });
 
         // Group matches by date
@@ -54,7 +54,8 @@ router.post('/', async (req, res) => {
             team1,
             team2,
             scheduledTime,
-            matchType
+            matchType,
+            status: 'scheduled'
         });
 
         await match.save();
@@ -79,16 +80,20 @@ router.post('/', async (req, res) => {
 // Update match status
 router.post('/:id/status', async (req, res) => {
     try {
-        const { status, winner, team1Score, team2Score } = req.body;
+        const match = await Match.findById(req.params.id).populate('team1 team2');
+        const { status, winner } = req.body;
         
         const updateData = {
-            status,
-            'score.team1': team1Score,
-            'score.team2': team2Score
+            status
         };
 
-        if (status === 'completed' && winner) {
-            updateData.winner = winner;
+        if (status === 'completed') {
+            // Set winner based on team selection
+            if (winner === 'team1') {
+                updateData.winner = match.team1._id;
+            } else if (winner === 'team2') {
+                updateData.winner = match.team2._id;
+            }
         }
 
         await Match.findByIdAndUpdate(req.params.id, updateData);

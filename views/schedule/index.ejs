@@ -16,70 +16,65 @@
                 </div>
                 <div class="card-body">
                     <% matches.forEach(match => { %>
-                        <div class="match-card mb-3">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-md-3">
-                                            <div class="tournament-info">
-                                                <h6 class="mb-1"><%= match.tournament ? match.tournament.name : 'Unassigned Tournament' %></h6>
-                                                <span class="badge bg-secondary"><%= match.matchType %></span>
+                        <% if (match.status === 'scheduled' || match.status === 'ongoing') { %>
+                            <div class="match-card mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-3">
+                                                <div class="tournament-info">
+                                                    <h6 class="mb-1"><%= match.tournament ? match.tournament.name : 'Unassigned Tournament' %></h6>
+                                                    <span class="badge bg-secondary"><%= match.matchType %></span>
+                                                    <% if (match.status === 'scheduled') { %>
+                                                        <span class="badge bg-warning">Scheduled</span>
+                                                    <% } else if (match.status === 'ongoing') { %>
+                                                        <span class="badge bg-success">Ongoing</span>
+                                                    <% } %>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="match-teams text-center">
-                                                <div class="row align-items-center">
-                                                    <div class="col-4 text-end">
-                                                        <h6 class="mb-0"><%= match.team1 ? match.team1.name : 'TBD' %></h6>
-                                                        <% if (match.status === 'completed' && match.score) { %>
-                                                            <span class="score"><%= match.score.team1 %></span>
-                                                        <% } %>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <span class="vs-badge">VS</span>
-                                                    </div>
-                                                    <div class="col-4 text-start">
-                                                        <h6 class="mb-0"><%= match.team2 ? match.team2.name : 'TBD' %></h6>
-                                                        <% if (match.status === 'completed' && match.score) { %>
-                                                            <span class="score"><%= match.score.team2 %></span>
-                                                        <% } %>
+                                            <div class="col-md-6">
+                                                <div class="match-teams text-center">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-4 text-end">
+                                                            <h6 class="mb-0"><%= match.team1 ? match.team1.name : 'TBD' %></h6>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <span class="vs-badge">VS</span>
+                                                        </div>
+                                                        <div class="col-4 text-start">
+                                                            <h6 class="mb-0"><%= match.team2 ? match.team2.name : 'TBD' %></h6>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="match-status text-end">
-                                                <div class="time mb-2">
-                                                    <%= new Date(match.scheduledTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %>
-                                                </div>
-                                                <% if (match.status === 'scheduled') { %>
-                                                    <button class="btn btn-sm btn-success" onclick="startMatch('<%= match._id %>')">
-                                                        Start Match
-                                                    </button>
-                                                <% } else if (match.status === 'ongoing') { %>
-                                                    <button class="btn btn-sm btn-primary" onclick="completeMatch('<%= match._id %>')">
-                                                        Complete Match
-                                                    </button>
-                                                <% } else { %>
-                                                    <div class="winner-info">
-                                                        <small class="text-success">
-                                                            Winner: <%= match.winner && match.winner.name ? match.winner.name : 'TBD' %>
-                                                        </small>
+                                            <div class="col-md-3">
+                                                <div class="match-status text-end">
+                                                    <div class="time mb-2">
+                                                        <%= new Date(match.scheduledTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %>
                                                     </div>
-                                                <% } %>
+                                                    <% if (match.status === 'scheduled') { %>
+                                                        <button class="btn btn-sm btn-success" onclick="startMatch('<%= match._id %>')">
+                                                            Start Match
+                                                        </button>
+                                                    <% } else if (match.status === 'ongoing') { %>
+                                                        <button class="btn btn-sm btn-primary" onclick="completeMatch('<%= match._id %>')">
+                                                            Complete Match
+                                                        </button>
+                                                    <% } %>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        <% } %>
                     <% }); %>
                 </div>
             </div>
         <% } %>
     <% } else { %>
         <div class="alert alert-info text-center">
-            No matches scheduled. Click "Schedule Match" to create your first match!
+            No active matches. Click "Schedule Match" to create a new match!
         </div>
     <% } %>
 </div>
@@ -95,15 +90,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label">Team 1 Score</label>
-                        <input type="number" class="form-control" name="team1Score" required min="0">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Team 2 Score</label>
-                        <input type="number" class="form-control" name="team2Score" required min="0">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Winner</label>
+                        <label class="form-label">Select Winner</label>
                         <select class="form-select" name="winner" required>
                             <option value="" disabled selected>Select winner</option>
                             <option value="team1">Team 1</option>
@@ -145,9 +132,7 @@ function completeMatch(matchId) {
     form.onsubmit = function(e) {
         e.preventDefault();
         const formData = new FormData(form);
-        const team1Score = formData.get('team1Score');
-        const team2Score = formData.get('team2Score');
-        const winnerTeam = formData.get('winner');
+        const winner = formData.get('winner');
 
         fetch(form.action, {
             method: 'POST',
@@ -156,9 +141,7 @@ function completeMatch(matchId) {
             },
             body: JSON.stringify({
                 status: 'completed',
-                team1Score,
-                team2Score,
-                winner: null // Let the server handle winner assignment
+                winner
             })
         })
         .then(() => window.location.reload())

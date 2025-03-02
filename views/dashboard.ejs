@@ -122,7 +122,10 @@
                                                 <img src="<%= team.logo %>" alt="<%= team.name %>" class="img-fluid">
                                             </div>
                                             <h6 class="mb-1"><%= team.name %></h6>
-                                            <small class="text-muted"><%= team.tournamentCount %> tournaments</small>
+                                            <div class="team-stats">
+                                                <small class="text-success"><%= team.wins %> wins</small>
+                                                <small class="text-muted"> · <%= team.tournamentCount %> tournaments</small>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
