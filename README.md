@@ -25,6 +25,11 @@ A comprehensive web application for managing esports tournaments, teams, and mat
   - Quick access to important information
   - Recent activities and upcoming events
 
+- Homepage Carousel
+  - Dynamic image carousel showcase
+  - Customizable carousel images
+  - Recommended image specifications (1920x1080px)
+
 ## Prerequisites
 
 - Node.js (v14 or higher)
@@ -77,10 +82,20 @@ esports-management-system/
 │   ├── css/          # Stylesheets
 │   ├── js/           # Client-side JavaScript
 │   └── images/       # Uploaded images
+│       └── carousel-images/  # Homepage carousel images
 ├── app.js            # Application entry point
 ├── package.json      # Project dependencies
 └── README.md         # Project documentation
 ```
+
+### Carousel Image Guidelines
+
+- Location: `public/images/carousel-images/`
+- Naming convention: carousel-1.jpg, carousel-2.jpg, carousel-3.jpg
+- Recommended specifications:
+  - Resolution: 1920x1080px (16:9 ratio)
+  - Format: JPG or PNG
+  - File size: Optimize to under 500KB each
 
 ## Technologies Used
 
