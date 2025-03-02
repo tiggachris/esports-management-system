@@ -7,7 +7,7 @@ const Team = require('../models/Team');
 // Match schedule list
 router.get('/', async (req, res) => {
     try {
-        const matches = await Match.find({ status: { $in: ['scheduled', 'ongoing'] } })
+        const matches = await Match.find({})
             .populate('tournament team1 team2')
             .sort({ scheduledTime: 1 });
 

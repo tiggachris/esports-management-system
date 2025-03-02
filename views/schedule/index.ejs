@@ -16,7 +16,6 @@
                 </div>
                 <div class="card-body">
                     <% matches.forEach(match => { %>
-                        <% if (match.status === 'scheduled' || match.status === 'ongoing') { %>
                             <div class="match-card mb-3">
                                 <div class="card">
                                     <div class="card-body">
@@ -29,6 +28,8 @@
                                                         <span class="badge bg-warning">Scheduled</span>
                                                     <% } else if (match.status === 'ongoing') { %>
                                                         <span class="badge bg-success">Ongoing</span>
+                                                    <% } else if (match.status === 'completed') { %>
+                                                        <span class="badge bg-secondary">Completed</span>
                                                     <% } %>
                                                 </div>
                                             </div>
@@ -67,8 +68,7 @@
                                     </div>
                                 </div>
                             </div>
-                        <% } %>
-                    <% }); %>
+                        <% }); %>
                 </div>
             </div>
         <% } %>
