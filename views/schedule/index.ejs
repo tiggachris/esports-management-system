@@ -30,6 +30,9 @@
                                                         <span class="badge bg-success">Ongoing</span>
                                                     <% } else if (match.status === 'completed') { %>
                                                         <span class="badge bg-secondary">Completed</span>
+                                                        <% if (match.winner) { %>
+                                                            <span class="badge bg-success">Winner: <%= match.winner.name %></span>
+                                                        <% } %>
                                                     <% } %>
                                                 </div>
                                             </div>
@@ -37,13 +40,19 @@
                                                 <div class="match-teams text-center">
                                                     <div class="row align-items-center">
                                                         <div class="col-4 text-end">
-                                                            <h6 class="mb-0"><%= match.team1 ? match.team1.name : 'TBD' %></h6>
+                                                            <h6 class="mb-0 <%= match.status === 'completed' && match.winner && match.winner._id.toString() === match.team1._id.toString() ? 'text-success fw-bold' : '' %>"><%= match.team1 ? match.team1.name : 'TBD' %></h6>
+                                                            <% if (match.status === 'completed' && match.winner && match.winner._id.toString() === match.team1._id.toString()) { %>
+                                                                <i class="fas fa-trophy text-warning"></i>
+                                                            <% } %>
                                                         </div>
                                                         <div class="col-4">
                                                             <span class="vs-badge">VS</span>
                                                         </div>
                                                         <div class="col-4 text-start">
-                                                            <h6 class="mb-0"><%= match.team2 ? match.team2.name : 'TBD' %></h6>
+                                                            <h6 class="mb-0 <%= match.status === 'completed' && match.winner && match.winner._id.toString() === match.team2._id.toString() ? 'text-success fw-bold' : '' %>"><%= match.team2 ? match.team2.name : 'TBD' %></h6>
+                                                            <% if (match.status === 'completed' && match.winner && match.winner._id.toString() === match.team2._id.toString()) { %>
+                                                                <i class="fas fa-trophy text-warning"></i>
+                                                            <% } %>
                                                         </div>
                                                     </div>
                                                 </div>
