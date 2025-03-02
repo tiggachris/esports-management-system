@@ -4,171 +4,90 @@
     <!-- Hero Section -->
     <div class="hero-section text-center py-5 mb-5">
         <div class="container">
+            <div class="brand-logo mb-4">
+                <img src="/images/logo.png" alt="Apex Grid Logo" class="img-fluid" style="max-width: 200px;">
+            </div>
             <h1 class="display-4 mb-3">APEX GRID</h1>
             <p class="lead mb-4">PEAK PERFORMANCE, STRUCTURED DOMINANCE</p>
-            <div class="stats-overview row justify-content-center">
-                <div class="col-md-3 mb-3">
-                    <div class="card stats-card">
-                        <div class="card-body">
-                            <i class="fas fa-trophy fa-2x mb-2"></i>
-                            <h3 class="stat-number mb-0"><%= stats.tournaments %></h3>
-                            <p class="stat-label mb-0">TOURNAMENTS</p>
-                        </div>
+        </div>
+    </div>
+
+    <!-- Image Carousel Section -->
+    <div class="container mb-5">
+        <div class="carousel-container">
+            <div class="carousel-wrapper">
+                <div class="carousel-slide">
+                    <video class="carousel-video" muted playsinline loop>
+                        <source src="/images/carousel-images/carousel-1.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="carousel-slide">
+                    <img src="/images/carousel-images/carousel-2.jpg" alt="Esports Event 2" class="carousel-image">
+                </div>
+            </div>
+            <button class="carousel-button prev">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="carousel-button next">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <div class="carousel-indicators"></div>
+        </div>
+    </div>
+
+    <!-- Gaming News Section -->
+    <div class="container mb-5">
+        <h2 class="section-title text-center mb-4">LATEST GAMING NEWS</h2>
+        <div class="row">
+            <!-- News Card 1 -->
+            <div class="col-md-4 mb-4">
+                <div class="news-card">
+                    <img src="/images/news/valorant-update.jpg" alt="Valorant Update" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">Valorant Introduces New Agent</h3>
+                        <p class="news-date">December 15, 2023</p>
+                        <p class="news-excerpt">The latest agent brings revolutionary tactical abilities to reshape the competitive meta.</p>
+                        <a href="#" class="read-more">Read More</a>
                     </div>
                 </div>
-                <div class="col-md-3 mb-3">
-                    <div class="card stats-card">
-                        <div class="card-body">
-                            <i class="fas fa-users fa-2x mb-2"></i>
-                            <h3 class="stat-number mb-0"><%= stats.teams %></h3>
-                            <p class="stat-label mb-0">TEAMS</p>
-                        </div>
+            </div>
+            <!-- News Card 2 -->
+            <div class="col-md-4 mb-4">
+                <div class="news-card">
+                    <img src="/images/news/league-worlds.jpg" alt="League Worlds" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">League Worlds 2023 Breaks Records</h3>
+                        <p class="news-date">December 14, 2023</p>
+                        <p class="news-excerpt">The championship final sees unprecedented viewership numbers across all platforms.</p>
+                        <a href="#" class="read-more">Read More</a>
                     </div>
                 </div>
-                <div class="col-md-3 mb-3">
-                    <div class="card stats-card">
-                        <div class="card-body">
-                            <i class="fas fa-gamepad fa-2x mb-2"></i>
-                            <h3 class="stat-number mb-0"><%= stats.matches %></h3>
-                            <p class="stat-label mb-0">MATCHES</p>
-                        </div>
+            </div>
+            <!-- News Card 3 -->
+            <div class="col-md-4 mb-4">
+                <div class="news-card">
+                    <img src="/images/news/csgo-tournament.jpg" alt="CS:GO Tournament" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">Major CS:GO Tournament Announced</h3>
+                        <p class="news-date">December 13, 2023</p>
+                        <p class="news-excerpt">The biggest CS:GO tournament of 2024 will feature a $2 million prize pool.</p>
+                        <a href="#" class="read-more">Read More</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container">
-        <div class="row">
-            <!-- Recent Tournaments -->
-            <div class="col-md-6 mb-4">
-                <div class="card h-100">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="section-title mb-0">RECENT TOURNAMENTS</h5>
-                        <a href="/tournaments" class="btn btn-sm btn-primary">VIEW ALL</a>
-                    </div>
-                    <div class="card-body">
-                        <% if (recentTournaments.length > 0) { %>
-                            <div class="tournament-list">
-                                <% recentTournaments.forEach(tournament => { %>
-                                    <div class="tournament-item">
-                                        <h6 class="tournament-title mb-1"><%= tournament.name %></h6>
-                                        <p class="tournament-info mb-2"><%= tournament.game %> | <%= tournament.startDate %></p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="badge bg-primary"><%= tournament.status %></span>
-                                            <a href="/tournaments/<%= tournament._id %>" class="btn btn-sm btn-outline-primary">DETAILS</a>
-                                        </div>
-                                    </div>
-                                <% }) %>
-                            </div>
-                        <% } else { %>
-                            <p class="text-center mb-0">No tournaments available</p>
-                        <% } %>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Upcoming Matches -->
-            <div class="col-md-6 mb-4">
-                <div class="card h-100">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="section-title mb-0">UPCOMING MATCHES</h5>
-                        <a href="/schedule" class="btn btn-sm btn-primary">VIEW ALL</a>
-                    </div>
-                    <div class="card-body">
-                        <% if (upcomingMatches.length > 0) { %>
-                            <% upcomingMatches.forEach(match => { %>
-                                <div class="match-item mb-3">
-                                    <div class="small text-muted mb-1">
-                                        <%= match.tournament ? `${match.tournament.name} - ${match.matchType}` : match.matchType %>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="team-vs">
-                                            <span><%= match.team1.name %></span>
-                                            <span class="mx-2 vs">VS</span>
-                                            <span><%= match.team2.name %></span>
-                                        </div>
-                                        <div class="match-time">
-                                            <small>
-                                                <%= new Date(match.scheduledTime).toLocaleString() %>
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            <% }); %>
-                        <% } else { %>
-                            <p class="text-center mb-0">No upcoming matches</p>
-                        <% } %>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Top Teams -->
-        <div class="row mb-4">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="section-title mb-0">TOP TEAMS</h5>
-                        <a href="/teams" class="btn btn-sm btn-primary">VIEW ALL TEAMS</a>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <% topTeams.forEach(team => { %>
-                                <div class="col-md-2 col-sm-4 col-6 mb-3">
-                                    <div class="card team-card h-100">
-                                        <div class="card-body">
-                                            <div class="logo-container">
-                                                <img src="<%= team.logo %>" alt="<%= team.name %>" class="img-fluid">
-                                            </div>
-                                            <h6 class="mb-1"><%= team.name %></h6>
-                                            <small class="text-muted"><%= team.tournamentCount %> tournaments</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            <% }); %>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Quick Actions -->
-        <div class="row mb-4">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="section-title mb-0">QUICK ACTIONS</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row text-center">
-                            <div class="col-md-3 col-sm-6 mb-3">
-                                <a href="/tournaments/create" class="btn btn-lg btn-outline-primary w-100">
-                                    <i class="fas fa-trophy mb-2"></i><br>
-                                    CREATE TOURNAMENT
-                                </a>
-                            </div>
-                            <div class="col-md-3 col-sm-6 mb-3">
-                                <a href="/teams/create" class="btn btn-lg btn-outline-primary w-100">
-                                    <i class="fas fa-users mb-2"></i><br>
-                                    CREATE TEAM
-                                </a>
-                            </div>
-                            <div class="col-md-3 col-sm-6 mb-3">
-                                <a href="/schedule/create" class="btn btn-lg btn-outline-primary w-100">
-                                    <i class="fas fa-calendar-plus mb-2"></i><br>
-                                    SCHEDULE MATCH
-                                </a>
-                            </div>
-                            <div class="col-md-3 col-sm-6 mb-3">
-                                <a href="/dashboard" class="btn btn-lg btn-outline-primary w-100">
-                                    <i class="fas fa-chart-line mb-2"></i><br>
-                                    VIEW DASHBOARD
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <!-- Social Media Section -->
+    <div class="container mb-5">
+        <div class="text-center">
+            <h2 class="section-title mb-4">FOLLOW US</h2>
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitch"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
             </div>
         </div>
     </div>

@@ -75,6 +75,23 @@ main {
     border-radius: 0;
 }
 
+.news-card {
+    background-color: var(--secondary-black);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.news-card .news-image {
+    width: 100%;
+    height: 225px;
+    object-fit: cover;
+    display: block;
+    background-color: var(--secondary-black);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 .card:hover {
     transform: translateY(-5px);
 }
@@ -693,6 +710,239 @@ p, span, a, label, td, th,
 
 .progress-bar {
     background-color: var(--primary-red);
+}
+
+/* Tables */
+.table-hover tbody tr:hover {
+    background-color: rgba(255, 0, 51, 0.1);
+}
+
+/* Form Select */
+select.form-select {
+    font-family: 'Exo 2', sans-serif;
+    background-color: var(--primary-black);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: var(--text-white) !important;
+}
+
+select.form-select option {
+    font-family: 'Exo 2', sans-serif;
+    background-color: var(--primary-black);
+    color: var(--text-white) !important;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 700;
+    color: var(--text-white) !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+p, span, a, label, td, th {
+    font-family: 'Exo 2', sans-serif;
+    color: var(--text-white) !important;
+}
+
+.text-muted {
+    color: var(--text-gray) !important;
+}
+
+/* Additional Enhancements for Text Visibility */
+::placeholder {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.small {
+    color: var(--text-gray) !important;
+}
+
+.text-danger {
+    color: var(--primary-red) !important;
+}
+
+/* Ensure ALL text elements are white */
+*, 
+*::before, 
+*::after {
+    color: var(--text-white);
+}
+
+/* Game section specific styles */
+.game-section,
+.game-section *,
+.game-title,
+.game-description,
+.game-info {
+    color: var(--text-white) !important;
+}
+
+/* Tournament section specific styles */
+.tournament-section,
+.tournament-section *,
+.tournament-title,
+.tournament-info,
+.tournament-details {
+    color: var(--text-white) !important;
+}
+
+/* Specific text elements that might be missing */
+.section-title,
+.category-title,
+.game-name,
+.team-name,
+.player-name,
+.match-details,
+.schedule-item,
+.news-title,
+.news-content,
+.sidebar-title,
+.sidebar-content,
+.footer-text {
+    color: var(--text-white) !important;
+}
+
+/* Ensure links in dark sections are visible */
+.dark-section a,
+.game-section a,
+.tournament-section a {
+    color: var(--text-white) !important;
+}
+
+.dark-section a:hover,
+.game-section a:hover,
+.tournament-section a:hover {
+    color: var(--primary-red) !important;
+}
+
+/* Override any Bootstrap text colors */
+.text-dark,
+.text-body,
+.text-black,
+.text-secondary {
+    color: var(--text-white) !important;
+}
+
+/* Ensure form labels and text are visible */
+label,
+.form-label,
+.form-text,
+.input-group-text {
+    color: var(--text-white) !important;
+}
+
+/* Additional specific elements */
+.recent-tournaments,
+.tournament-list,
+.game-list,
+.team-list,
+.player-list,
+.match-list,
+.news-list,
+.sidebar-list {
+    color: var(--text-white) !important;
+}
+
+/* Ensure headings in all contexts are white */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    color: var(--text-white) !important;
+}
+
+/* Override any inherited colors */
+[class*="text-"] {
+    color: var(--text-white) !important;
+}
+
+/* Exception for specific elements that need different colors */
+.text-danger,
+.text-warning,
+.text-success {
+    color: inherit !important;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-success,
+.btn-danger,
+.btn-warning {
+    color: var(--text-white) !important;
+}
+
+/* Carousel Styles */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.carousel-wrapper {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    height: 400px;
+}
+
+.carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.carousel-button:hover {
+    background: var(--primary-red);
+}
+
+.carousel-button.prev {
+    left: 10px;
+}
+
+.carousel-button.next {
+    right: 10px;
+}
+
+.carousel-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.carousel-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.carousel-indicator.active {
+    background: var(--primary-red);
+    transform: scale(1.2);
 }
 
 /* Tables */
