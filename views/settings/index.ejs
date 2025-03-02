@@ -1,141 +1,28 @@
 <%- include('../partials/header') %>
 
 <div class="settings-page">
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card mb-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">User Profile Settings</h5>
+                </div>
                 <div class="card-body">
-                    <div class="nav flex-column nav-pills" role="tablist">
-                        <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#general" type="button">
-                            <i class="fas fa-cog"></i> General
-                        </button>
-                        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tournaments" type="button">
-                            <i class="fas fa-trophy"></i> Tournaments
-                        </button>
-                        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#teams" type="button">
-                            <i class="fas fa-users"></i> Teams
-                        </button>
-                        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#appearance" type="button">
-                            <i class="fas fa-paint-brush"></i> Appearance
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-9">
-            <div class="tab-content">
-                <!-- General Settings -->
-                <div class="tab-pane fade show active" id="general">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="mb-0">General Settings</h5>
+                    <form action="/settings" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" name="username" value="<%= user.username %>">
                         </div>
-                        <div class="card-body">
-                            <form action="/settings" method="POST">
-                                <div class="mb-3">
-                                    <label class="form-label">Application Name</label>
-                                    <input type="text" class="form-control" name="appName" value="<%= settings.appName %>">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Time Zone</label>
-                                    <select class="form-select" name="timeZone">
-                                        <option value="UTC" <%= settings.timeZone === 'UTC' ? 'selected' : '' %>>UTC</option>
-                                        <option value="GMT" <%= settings.timeZone === 'GMT' ? 'selected' : '' %>>GMT</option>
-                                        <!-- Add more time zones as needed -->
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Date Format</label>
-                                    <select class="form-select" name="dateFormat">
-                                        <option value="MM/DD/YYYY" <%= settings.dateFormat === 'MM/DD/YYYY' ? 'selected' : '' %>>MM/DD/YYYY</option>
-                                        <option value="DD/MM/YYYY" <%= settings.dateFormat === 'DD/MM/YYYY' ? 'selected' : '' %>>DD/MM/YYYY</option>
-                                        <option value="YYYY-MM-DD" <%= settings.dateFormat === 'YYYY-MM-DD' ? 'selected' : '' %>>YYYY-MM-DD</option>
-                                    </select>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Save Changes</button>
-                            </form>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" value="<%= user.email %>">
                         </div>
-                    </div>
-                </div>
-
-                <!-- Tournament Settings -->
-                <div class="tab-pane fade" id="tournaments">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="mb-0">Tournament Settings</h5>
+                        <div class="mb-3">
+                            <label class="form-label">New Password</label>
+                            <input type="password" class="form-control" name="password" placeholder="Enter new password">
                         </div>
-                        <div class="card-body">
-                            <form action="/settings" method="POST">
-                                <div class="mb-3">
-                                    <label class="form-label">Default Game Types</label>
-                                    <select class="form-select" name="defaultGameTypes" multiple>
-                                        <% settings.defaultGameTypes.forEach(type => { %>
-                                            <option value="<%= type %>" selected><%= type %></option>
-                                        <% }); %>
-                                    </select>
-                                    <div class="form-text">Hold Ctrl (Windows) or Command (Mac) to select multiple types.</div>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Maximum Teams per Tournament</label>
-                                    <input type="number" class="form-control" name="maxTournamentTeams" 
-                                           value="<%= settings.maxTournamentTeams %>" min="2" max="128">
-                                </div>
-                                <button type="submit" class="btn btn-primary">Save Changes</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Team Settings -->
-                <div class="tab-pane fade" id="teams">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="mb-0">Team Settings</h5>
-                        </div>
-                        <div class="card-body">
-                            <form action="/settings" method="POST">
-                                <div class="mb-3">
-                                    <label class="form-label">Maximum Players per Team</label>
-                                    <input type="number" class="form-control" name="maxTeamSize" 
-                                           value="<%= settings.maxTeamSize %>" min="1" max="50">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Default Player Roles</label>
-                                    <input type="text" class="form-control" name="defaultRoles" 
-                                           placeholder="Enter roles separated by commas">
-                                    <div class="form-text">Example: Captain, Support, Entry Fragger</div>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Save Changes</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Appearance Settings -->
-                <div class="tab-pane fade" id="appearance">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="mb-0">Appearance Settings</h5>
-                        </div>
-                        <div class="card-body">
-                            <form action="/settings" method="POST">
-                                <div class="mb-3">
-                                    <label class="form-label">Theme</label>
-                                    <select class="form-select" name="theme">
-                                        <option value="light">Light</option>
-                                        <option value="dark">Dark</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Primary Color</label>
-                                    <input type="color" class="form-control form-control-color" name="primaryColor" 
-                                           value="#0d6efd">
-                                </div>
-                                <button type="submit" class="btn btn-primary">Save Changes</button>
-                            </form>
-                        </div>
-                    </div>
+                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                    </form>
                 </div>
             </div>
         </div>

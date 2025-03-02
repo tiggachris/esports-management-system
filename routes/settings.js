@@ -2,10 +2,19 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const fs = require('fs').promises;
+const User = require('../models/user');
+const { isAuthenticated } = require('./auth');
 
 // Settings page
-router.get('/', async (req, res) => {
+router.get('/', isAuthenticated, async (req, res) => {
     try {
+        // Get user from session
+        const user = await User.findById(req.session.userId);
+
+        if (!user) {
+            return res.redirect('/login');
+        }
+
         // You can add more settings as needed
         const settings = {
             appName: 'Esports Management System',
@@ -17,17 +26,32 @@ router.get('/', async (req, res) => {
             maxTournamentTeams: 32
         };
 
-        res.render('settings/index', { settings });
+        res.render('settings/index', { settings, user });
     } catch (error) {
         res.status(500).render('error', { error });
     }
 });
 
 // Update settings
-router.post('/', async (req, res) => {
+router.post('/', isAuthenticated, async (req, res) => {
     try {
-        // Handle settings update logic here
-        // For now, we'll just redirect back
+        const user = await User.findById(req.session.userId);
+        if (!user) {
+            return res.redirect('/login');
+        }
+
+        const { username, email, password } = req.body;
+
+        // Update user profile
+        user.username = username;
+        user.email = email;
+        
+        // Only update password if a new one is provided
+        if (password && password.trim() !== '') {
+            user.password = password;
+        }
+
+        await user.save();
         res.redirect('/settings');
     } catch (error) {
         res.status(500).render('error', { error });
